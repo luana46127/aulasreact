@@ -14,6 +14,8 @@ const App = props => {
     
   ])
 
+  // UseEffect com parametro [] (vazio dentro) roda a função que está dentro (no caso getBooks)
+  // quando carrega o componente
   useEffect(() => {
     getBooks();
   }, [])
@@ -45,6 +47,7 @@ const App = props => {
     
   }
 
+  // Deleta algum livro do servidor dado o id desse livro 
   const deleteFromServer = (id) => {
     api.delete("/books/" + id)
       .then(res => {
@@ -62,6 +65,10 @@ const App = props => {
          value={form.title} onChange={handleChange} />
         <Input id="author" label="Author" name="author"
          value={form.author} onChange={handleChange} />
+
+          {/* Aqui não se passa nenhum parametro. Então posso chamar direto. Obs: evento (e) não é parâemtro
+          obrigatório */}
+
         <Button onClick={handleSubmit}>
           <h2>Submit</h2>
         </Button>
@@ -77,10 +84,12 @@ const App = props => {
           </tr>
         </thead>
         <tbody>
+           {/* Transformo cada livro em livros numa linha de tabela com seus respectivos atributos */}
           {books.map((book) => <tr>
             <td>{book.id}</td>
             <td>{book.title}</td>
             <td>{book.author}</td>
+            {/* Quando passa parâmetro específico, usa-se a notação de função anonima */}
             <td onClick={() => deleteFromServer(book.id)}>X</td>
 
           </tr>)}
